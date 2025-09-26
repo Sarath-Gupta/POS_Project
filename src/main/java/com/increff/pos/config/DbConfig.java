@@ -16,6 +16,7 @@ import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import com.increff.pos.commons.Constants;
 
 @EnableTransactionManagement
 @Configuration
@@ -24,10 +25,6 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @ComponentScan(basePackages = "com.increff.pos.dao")
 public class DbConfig {
 
-    //TODO: create a separate java class as Constants and move all the static final variables there
-    public static final String PACKAGE_POJO = "com.increff.pos.pojo";
-
-    //TODO: create a separate component as ApplicationProperties and move all the properties there
     @Value("${jdbc.driverClassName}")
     private String jdbcDriver;
     @Value("${jdbc.url}")
@@ -42,9 +39,8 @@ public class DbConfig {
     private String hibernateShowSql;
     @Value("${hibernate.hbm2ddl.auto}")
     private String hibernateHbm2ddl;
-
-
     @Bean(name = "dataSource")
+
     public DataSource getDataSource() {
         BasicDataSource bean = new BasicDataSource();
         bean.setDriverClassName(jdbcDriver);
@@ -65,7 +61,7 @@ public class DbConfig {
     public LocalContainerEntityManagerFactoryBean entityManagerFactory(DataSource dataSource) {
         LocalContainerEntityManagerFactoryBean bean = new LocalContainerEntityManagerFactoryBean();
         bean.setDataSource(dataSource);
-        bean.setPackagesToScan(PACKAGE_POJO);
+        bean.setPackagesToScan(Constants.PACKAGE_POJO);
         HibernateJpaVendorAdapter jpaAdapter = new HibernateJpaVendorAdapter();
         bean.setJpaVendorAdapter(jpaAdapter);
         Properties jpaProperties = new Properties();

@@ -35,12 +35,13 @@ public abstract class AbstractDao<T> {
         entityManager.persist(entity);
     }
 
+
     public void update(T entity) {
         entityManager.merge(entity);
     }
 
     public void delete(T entity) {
-        entityManager.remove(entityManager.contains(entity) ? entity : entityManager.merge(entity));
+        entityManager.remove(entity);
     }
 
     protected EntityManager getEntityManager() {

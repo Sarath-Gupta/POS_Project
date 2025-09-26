@@ -2,14 +2,12 @@ package com.increff.pos.api;
 
 import com.increff.pos.dao.ClientDao;
 import com.increff.pos.pojo.Client;
-import com.increff.pos.exception.ApiException;
-import com.increff.pos.util.ClientUtil;
+import com.increff.pos.commons.ApiException;
+import com.increff.pos.util.ConvertUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.util.List;
-import java.util.Objects;
 
 @Service
 public class ClientApi {
@@ -17,16 +15,21 @@ public class ClientApi {
     @Autowired
     private ClientDao clientDao;
 
+    @Autowired
+    private ConvertUtil convertUtil;
+
     @Transactional
     public void add(Client client) throws ApiException {
         Client existingClient = clientDao.findByName(client.getClientName());
-        ClientUtil.ifExists(existingClient);
+        convertUtil.ifExists(existingClient);
         clientDao.add(client);
     }
 
 
-    public Client getById(Integer id) {
-        return clientDao.findById(id);
+    public Client getById(Integer id) throws ApiException {
+        Client clientPojo = clientDao.findById(id);
+        convertUtil.ifNotExists(clientPojo);
+        return clientPojo;
     }
 
 
@@ -34,17 +37,21 @@ public class ClientApi {
         return clientDao.findAll();
     }
 
-
-    public void update(Integer id, Client client) throws ApiException {
-        Client existingClient = getById(id);
-
-        Client clientWithSameName = clientDao.findByName(client.getClientName());
-        if (clientWithSameName != null && !Objects.equals(clientWithSameName.getId(), existingClient.getId())) {
-            throw new ApiException("Client with name '" + client.getClientName() + "' already exists.");
+    @Transactional
+    public Client update(Integer id, Client client) throws ApiException {
+        Client oldClient = getById(id);
+        if(oldClient.getClientName().equals(client.getClientName())) {
+            throw new ApiException("Client name already exists");
         }
+        oldClient.setClientName(client.getClientName());
+        clientDao.update(oldClient);
+        return oldClient;
+    }
 
-        existingClient.setClientName(client.getClientName().trim().toLowerCase());
-        clientDao.add(existingClient);
+    @Transactional
+    public void delete(Integer id, Client client) throws ApiException {
+        convertUtil.ifNotExists(client);
+        clientDao.delete(client);
     }
 
 }
