@@ -30,7 +30,7 @@ public class ProductDaoTest {
     private Client createClient(String clientName) {
         Client client = new Client();
         client.setClientName(clientName);
-        clientRepository.insert(client);
+        clientRepository.add(client);
         return client;
     }
 
@@ -44,7 +44,7 @@ public class ProductDaoTest {
         product.setName("product1");
         product.setMrp(10.0);
         product.setImgUrl("url1");
-        productRepository.insert(product);
+        productRepository.add(product);
         assertNotNull(product.getId());
     }
 
@@ -58,7 +58,7 @@ public class ProductDaoTest {
         product.setName("product2");
         product.setMrp(20.0);
         product.setImgUrl("url2");
-        productRepository.insert(product);
+        productRepository.add(product);
 
         Product retrievedProduct = productRepository.findByBarcode("barcode2");
         assertNotNull(retrievedProduct);
@@ -75,7 +75,7 @@ public class ProductDaoTest {
         product1.setName("product3");
         product1.setMrp(30.0);
         product1.setImgUrl("url3");
-        productRepository.insert(product1);
+        productRepository.add(product1);
 
         Product product2 = new Product();
         product2.setBarcode("barcode4");
@@ -83,7 +83,7 @@ public class ProductDaoTest {
         product2.setName("product4");
         product2.setMrp(40.0);
         product2.setImgUrl("url4");
-        productRepository.insert(product2);
+        productRepository.add(product2);
 
         List<Product> products = productRepository.findByClientId(client.getId());
         assertEquals(2, products.size());

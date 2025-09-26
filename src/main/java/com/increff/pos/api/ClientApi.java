@@ -3,6 +3,7 @@ package com.increff.pos.api;
 import com.increff.pos.dao.ClientDao;
 import com.increff.pos.pojo.Client;
 import com.increff.pos.exception.ApiException;
+import com.increff.pos.util.ClientUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,17 +20,13 @@ public class ClientApi {
     @Transactional
     public void add(Client client) throws ApiException {
         Client existingClient = clientDao.findByName(client.getClientName());
-        if (existingClient != null) {
-            throw new ApiException("Client with name '" + client.getClientName() + "' already exists.");
-        }
-
-        client.setClientName(client.getClientName().trim().toLowerCase());
-        clientDao.insert(client);
+        ClientUtil.ifExists(existingClient);
+        clientDao.add(client);
     }
 
 
-    public Client get(Integer id) throws ApiException {
-        return getClientFromId(id);
+    public Client getById(Integer id) {
+        return clientDao.findById(id);
     }
 
 
@@ -39,18 +36,15 @@ public class ClientApi {
 
 
     public void update(Integer id, Client client) throws ApiException {
-        Client existingClient = getClientFromId(id);
+        Client existingClient = getById(id);
 
-        Client clientWithSameName = clientDao.findByName(client.getClientName().trim().toLowerCase());
+        Client clientWithSameName = clientDao.findByName(client.getClientName());
         if (clientWithSameName != null && !Objects.equals(clientWithSameName.getId(), existingClient.getId())) {
             throw new ApiException("Client with name '" + client.getClientName() + "' already exists.");
         }
 
         existingClient.setClientName(client.getClientName().trim().toLowerCase());
-        clientDao.insert(existingClient);
+        clientDao.add(existingClient);
     }
 
-    private Client getClientFromId(Integer id) throws ApiException {
-        return clientDao.findById(id);
-    }
 }

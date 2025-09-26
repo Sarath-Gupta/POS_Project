@@ -26,7 +26,7 @@ public class ClientDaoTest {
     public void testInsert() {
         Client client = new Client();
         client.setClientName("testclient1");
-        clientRepository.insert(client);
+        clientRepository.add(client);
         assertNotNull(client.getId());
     }
 
@@ -35,7 +35,7 @@ public class ClientDaoTest {
     public void testFindByName() {
         Client client = new Client();
         client.setClientName("testclient2");
-        clientRepository.insert(client);
+        clientRepository.add(client);
 
         Client retrievedClient = clientRepository.findByName("testclient2");
         assertNotNull(retrievedClient);
@@ -48,7 +48,7 @@ public class ClientDaoTest {
     public void testFindById() {
         Client client = new Client();
         client.setClientName("Hello");
-        clientRepository.insert(client);
+        clientRepository.add(client);
 
         Integer id = client.getId();
         Client retrievedClient = clientRepository.findById(id);

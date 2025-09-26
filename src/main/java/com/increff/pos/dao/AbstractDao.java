@@ -1,8 +1,6 @@
 package com.increff.pos.dao;
 
-import com.increff.pos.pojo.Client;
 import org.springframework.stereotype.Repository;
-
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
@@ -33,9 +31,8 @@ public abstract class AbstractDao<T> {
         return query.getResultList();
     }
 
-    public Client insert(T entity) {
+    public void add(T entity) {
         entityManager.persist(entity);
-        return null;
     }
 
     public void update(T entity) {
