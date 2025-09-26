@@ -5,7 +5,7 @@ import com.increff.pos.commons.ApiException;
 import com.increff.pos.model.data.ClientData;
 import com.increff.pos.model.form.ClientForm;
 import com.increff.pos.pojo.Client;
-import com.increff.pos.util.ConvertUtil;
+import com.increff.pos.util.ClientUtil;
 import com.increff.pos.util.NormalizeUtil;
 import com.increff.pos.util.ValidationUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,39 +19,36 @@ public class ClientDto {
     @Autowired
     ClientApi clientApi;
 
-    @Autowired
-    ConvertUtil convertUtil;
-
     public ClientData add(ClientForm clientForm) throws ApiException {
         NormalizeUtil.normalize(clientForm);
         ValidationUtil.validate(clientForm);
-        Client clientPojo = convertUtil.convert(clientForm,Client.class);
+        Client clientPojo = ClientUtil.convert(clientForm);
         clientApi.add(clientPojo);
-        return convertUtil.convert(clientPojo,ClientData.class);
+        return ClientUtil.convert(clientPojo);
     }
 
     public ClientData getById(Integer id) throws ApiException {
         Client clientPojo = clientApi.getById(id);
-        return convertUtil.convert(clientPojo,ClientData.class);
+        return ClientUtil.convert(clientPojo);
     }
 
     public List<ClientData> getAll() {
         List<Client> list = clientApi.getAll();
-        return convertUtil.convert(list,ClientData.class);
+        return ClientUtil.convert(list);
     }
 
     public ClientData update(Integer id, ClientForm clientForm) throws ApiException {
         NormalizeUtil.normalize(clientForm);
         ValidationUtil.validate(clientForm);
-        Client clientPojo = convertUtil.convert(clientForm,Client.class);
+        Client clientPojo = ClientUtil.convert(clientForm);
         Client updatedPojo = clientApi.update(id, clientPojo);
-        return convertUtil.convert(updatedPojo,ClientData.class);
+        return ClientUtil.convert(updatedPojo);
     }
 
     public void delete(Integer id, ClientForm clientForm) throws ApiException {
         NormalizeUtil.normalize(clientForm);
         ValidationUtil.validate(clientForm);
-        Client clientPojo = convertUtil.convert(clientForm,Client.class);
+        Client clientPojo = ClientUtil.convert(clientForm);
         clientApi.delete(id, clientPojo);
     }
 

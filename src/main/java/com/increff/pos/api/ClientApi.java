@@ -3,7 +3,7 @@ package com.increff.pos.api;
 import com.increff.pos.dao.ClientDao;
 import com.increff.pos.pojo.Client;
 import com.increff.pos.commons.ApiException;
-import com.increff.pos.util.ConvertUtil;
+import com.increff.pos.util.ClientUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,20 +15,17 @@ public class ClientApi {
     @Autowired
     private ClientDao clientDao;
 
-    @Autowired
-    private ConvertUtil convertUtil;
-
     @Transactional
     public void add(Client client) throws ApiException {
         Client existingClient = clientDao.findByName(client.getClientName());
-        convertUtil.ifExists(existingClient);
+        ClientUtil.ifExists(existingClient);
         clientDao.add(client);
     }
 
 
     public Client getById(Integer id) throws ApiException {
         Client clientPojo = clientDao.findById(id);
-        convertUtil.ifNotExists(clientPojo);
+        ClientUtil.ifNotExists(clientPojo);
         return clientPojo;
     }
 
@@ -50,7 +47,7 @@ public class ClientApi {
 
     @Transactional
     public void delete(Integer id, Client client) throws ApiException {
-        convertUtil.ifNotExists(client);
+        ClientUtil.ifNotExists(client);
         clientDao.delete(client);
     }
 
