@@ -45,7 +45,8 @@ public class InventoryApi {
         Inventory existing = inventoryDao.findById(id);
         InventoryUtil.ifNotExists(existing);
         existing.setQuantity(updatedInventory.getQuantity());
-        inventoryDao.update(existing);
         return existing;
     }
+
+
 }

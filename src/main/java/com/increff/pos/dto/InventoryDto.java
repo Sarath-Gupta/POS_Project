@@ -25,11 +25,12 @@ public class InventoryDto {
         return InventoryUtil.convert(inventory);
     }
 
+
     public InventoryData update(Integer id, InventoryForm form) throws ApiException {
         ValidationUtil.validate(form);
         Inventory inventory = InventoryUtil.convert(form);
-        inventoryApi.update(id, inventory);
-        return InventoryUtil.convert(inventory);
+        Inventory updatedInventory = inventoryApi.update(id, inventory);
+        return InventoryUtil.convert(updatedInventory);
     }
 
     public InventoryData findById(Integer id) throws ApiException {
