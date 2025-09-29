@@ -1,5 +1,6 @@
 package com.increff.pos.api;
 
+import com.google.protobuf.Api;
 import com.increff.pos.dao.ClientDao;
 import com.increff.pos.pojo.Client;
 import com.increff.pos.commons.ApiException;
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class ClientApi {
@@ -36,7 +38,7 @@ public class ClientApi {
 
     @Transactional
     public Client update(Integer id, Client client) throws ApiException {
-        Client oldClient = getById(id);
+        Client oldClient = clientDao.findById(id);
         if(oldClient.getClientName().equals(client.getClientName())) {
             throw new ApiException("Client name already exists");
         }
@@ -46,9 +48,12 @@ public class ClientApi {
     }
 
     @Transactional
-    public void delete(Integer id, Client client) throws ApiException {
-        ClientUtil.ifNotExists(client);
-        clientDao.delete(client);
+    public void delete(Integer id) throws ApiException {
+        Client deleteClient = clientDao.findById(id);
+        if(Objects.isNull(deleteClient)) {
+            throw new ApiException("Bro doesn't exist");
+        }
+        clientDao.delete(deleteClient);
     }
 
 }

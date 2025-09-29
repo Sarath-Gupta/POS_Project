@@ -1,12 +1,13 @@
 package com.increff.pos.api;
 
-
 import com.increff.pos.dao.ProductDao;
 import com.increff.pos.commons.ApiException;
 import com.increff.pos.pojo.Product;
+import com.increff.pos.util.ProductUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import java.util.List;
 
 @Service
 public class ProductApi {
@@ -20,9 +21,29 @@ public class ProductApi {
         if(exsistingProduct != null) {
             throw new ApiException("Product with the same name already exists");
         }
-
-        product.setName(product.getName().trim().toLowerCase());
         productDao.add(product);
+    }
+
+    public Product findById(Integer id) throws ApiException {
+        Product product = productDao.findById(id);
+        ProductUtil.ifNotExists(product);
+        return product;
+    }
+
+    public List<Product> getAll() {
+        return productDao.findAll();
+    }
+
+    @Transactional
+    public Product update(Integer id, Product product) throws ApiException{
+        Product oldClient = productDao.findById(id);
+        oldClient.setBarcode(product.getBarcode());
+        oldClient.setName(product.getName());
+        oldClient.setImgUrl(product.getImgUrl());
+        oldClient.setClientId(product.getClientId());
+        oldClient.setMrp(product.getMrp());
+        productDao.update(oldClient);
+        return product;
     }
 
 

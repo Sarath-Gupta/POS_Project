@@ -48,8 +48,7 @@ public class ClientDto {
     public void delete(Integer id, ClientForm clientForm) throws ApiException {
         NormalizeUtil.normalize(clientForm);
         ValidationUtil.validate(clientForm);
-        Client clientPojo = ClientUtil.convert(clientForm);
-        clientApi.delete(id, clientPojo);
+        clientApi.delete(id);
     }
 
 

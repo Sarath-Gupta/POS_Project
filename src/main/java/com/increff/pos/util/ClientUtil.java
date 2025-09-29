@@ -4,17 +4,11 @@ import com.increff.pos.commons.ApiException;
 import com.increff.pos.model.data.ClientData;
 import com.increff.pos.model.form.ClientForm;
 import com.increff.pos.pojo.Client;
-import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 public class ClientUtil {
-
-    @Autowired
-    private ModelMapper modelMapper;
 
     public static Client convert(ClientForm form) {
         Client pojo = new Client();

@@ -2,6 +2,8 @@ package com.increff.pos.dao;
 
 import com.increff.pos.pojo.Product;
 import org.springframework.stereotype.Repository;
+
+import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 import java.util.List;
 
@@ -17,7 +19,11 @@ public class ProductDao extends AbstractDao<Product> {
         TypedQuery<Product> query = getEntityManager()
                 .createQuery(SELECT_BY_BARCODE, Product.class);
         query.setParameter("barcode", barcode);
-        return query.getSingleResult();
+        try {
+            return query.getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        }
     }
 
     public List<Product> findByClientId(Integer clientId) {
@@ -31,7 +37,11 @@ public class ProductDao extends AbstractDao<Product> {
         TypedQuery<Product> query = getEntityManager()
                 .createQuery(SELECT_BY_NAME, Product.class);
         query.setParameter("name",name);
-        return query.getSingleResult();
+        try {
+            return query.getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        }
     }
 
     public List<Product> findByMrpBetween(Double minMrp, Double maxMrp) {
