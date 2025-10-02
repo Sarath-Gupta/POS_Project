@@ -3,8 +3,10 @@ package com.increff.pos.util;
 import com.increff.pos.commons.ApiException;
 import com.increff.pos.model.form.ClientForm;
 import com.increff.pos.model.form.InventoryForm;
+import com.increff.pos.model.form.OrderItemForm;
 import com.increff.pos.model.form.ProductForm;
 
+import java.util.List;
 import java.util.function.Predicate;
 import java.util.function.ToIntFunction;
 
@@ -60,6 +62,36 @@ public class ValidationUtil {
                 q -> q == null || q <= 0,
                 q -> String.valueOf(q).length()
         );
+    }
+
+    public static void validate(List<OrderItemForm> orderItemFormList) throws ApiException {
+        for(OrderItemForm orderItemForm : orderItemFormList) {
+            validate(
+                    orderItemForm.getOrderId(),
+                    "Order ID",
+                    id -> id == null || id <= 0,
+                    id -> String.valueOf(id).length()
+            );
+            validate(
+                    orderItemForm.getProductId(),
+                    "Product ID",
+                    id -> id == null || id <= 0,
+                    id -> String.valueOf(id).length()
+            );
+
+            validate(
+                    orderItemForm.getQuantity(),
+                    "Quantity",
+                    quantity -> quantity == null | quantity < 0,
+                    quantity -> String.valueOf(quantity).length()
+            );
+            validate(
+                    orderItemForm.getSellingPrice(),
+                    "Selling Price",
+                    sp -> sp == null || sp <= 0,
+                    sp -> String.valueOf(sp).length()
+            );
+        }
     }
 
     public static void ifSameName(String oldClient, String newClient) throws ApiException {

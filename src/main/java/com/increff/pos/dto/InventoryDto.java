@@ -18,14 +18,6 @@ public class InventoryDto {
     @Autowired
     private InventoryApi inventoryApi;
 
-    public InventoryData add(InventoryForm form) throws ApiException {
-        ValidationUtil.validate(form);
-        Inventory inventory = InventoryUtil.convert(form);
-        inventoryApi.add(inventory);
-        return InventoryUtil.convert(inventory);
-    }
-
-
     public InventoryData update(Integer id, InventoryForm form) throws ApiException {
         ValidationUtil.validate(form);
         Inventory inventory = InventoryUtil.convert(form);

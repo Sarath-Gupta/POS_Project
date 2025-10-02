@@ -16,10 +16,6 @@ public class InventoryController {
     @Autowired
     private InventoryDto inventoryDto;
 
-    @RequestMapping(method = RequestMethod.POST)
-    public InventoryData addInventory(@RequestBody InventoryForm form) throws ApiException {
-        return inventoryDto.add(form);
-    }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     public InventoryData updateInventory(@PathVariable("id") Integer id, @RequestBody InventoryForm form) throws ApiException {
