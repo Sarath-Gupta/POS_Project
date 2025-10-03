@@ -67,12 +67,6 @@ public class ValidationUtil {
     public static void validate(List<OrderItemForm> orderItemFormList) throws ApiException {
         for(OrderItemForm orderItemForm : orderItemFormList) {
             validate(
-                    orderItemForm.getOrderId(),
-                    "Order ID",
-                    id -> id == null || id <= 0,
-                    id -> String.valueOf(id).length()
-            );
-            validate(
                     orderItemForm.getProductId(),
                     "Product ID",
                     id -> id == null || id <= 0,
@@ -92,6 +86,29 @@ public class ValidationUtil {
                     sp -> String.valueOf(sp).length()
             );
         }
+    }
+
+    public static void validate(OrderItemForm orderItemForm) throws ApiException{
+        validate(
+                orderItemForm.getProductId(),
+                "Product ID",
+                id -> id == null || id <= 0,
+                id -> String.valueOf(id).length()
+        );
+
+        validate(
+                orderItemForm.getQuantity(),
+                "Quantity",
+                quantity -> quantity == null | quantity < 0,
+                quantity -> String.valueOf(quantity).length()
+        );
+        validate(
+                orderItemForm.getSellingPrice(),
+                "Selling Price",
+                sp -> sp == null || sp <= 0,
+                sp -> String.valueOf(sp).length()
+        );
+
     }
 
     public static void ifSameName(String oldClient, String newClient) throws ApiException {
