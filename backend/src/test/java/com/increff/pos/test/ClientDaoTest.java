@@ -2,7 +2,7 @@ package com.increff.pos.test;
 
 import com.increff.pos.config.DbConfig;
 import com.increff.pos.dao.ClientDao;
-import com.increff.pos.pojo.Client;
+import com.increff.pos.entity.Client;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

@@ -1,4 +1,4 @@
-package com.increff.pos.pojo;
+package com.increff.pos.entity;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -10,7 +10,6 @@ snake case column, table names, use lombok, unique constraint class level,wrappe
  */
 
 @Entity
-@Table(uniqueConstraints = @UniqueConstraint(columnNames = {"clientName"}))
 @Getter
 @Setter
 public class Client extends BaseEntity {
@@ -18,6 +17,6 @@ public class Client extends BaseEntity {
    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-   @Column(nullable = false)
+   @Column(nullable = false, unique = true)
     private String clientName;
 }

@@ -1,8 +1,8 @@
 package com.increff.pos.api;
 
 import com.increff.pos.commons.ApiException;
-import com.increff.pos.pojo.OrderItem;
-import com.increff.pos.pojo.Orders;
+import com.increff.pos.entity.OrderItem;
+import com.increff.pos.entity.Orders;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;

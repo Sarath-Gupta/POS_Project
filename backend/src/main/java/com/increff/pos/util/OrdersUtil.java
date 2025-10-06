@@ -1,7 +1,7 @@
 package com.increff.pos.util;
 
 import com.increff.pos.model.data.OrderData;
-import com.increff.pos.pojo.Orders;
+import com.increff.pos.entity.Orders;
 
 import java.util.ArrayList;
 import java.util.List;

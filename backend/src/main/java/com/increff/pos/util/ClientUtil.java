@@ -3,13 +3,15 @@ package com.increff.pos.util;
 import com.increff.pos.commons.ApiException;
 import com.increff.pos.model.data.ClientData;
 import com.increff.pos.model.form.ClientForm;
-import com.increff.pos.pojo.Client;
+import com.increff.pos.entity.Client;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 public class ClientUtil {
 
+    //TODO: to use a generalised method for this conversion
     public static Client convert(ClientForm form) {
         Client pojo = new Client();
         pojo.setClientName(form.getClientName());
@@ -35,15 +37,17 @@ public class ClientUtil {
         return listData;
     }
 
-    public static void ifExists(Client client) throws ApiException{
-        if(!Objects.isNull(client)) {
-            throw new ApiException("Client already exists");
-        }
-    }
-
-    public static void ifNotExists(Client client) throws ApiException {
-        if(Objects.isNull(client)) {
-            throw new ApiException("Client doesn't exist");
-        }
-    }
+//    public List<ClientForm> parse(MultipartFile file) throws IOException {
+//        List<ClientForm> list = new ArrayList<>();
+//        try (BufferedReader br = new BufferedReader(new InputStreamReader(file.getInputStream()))) {
+//            String line;
+//            boolean firstLine = true;
+//            while((line = br.readLine()) != null) {
+//                if(firstLine) {
+//                    firstLine = false;
+//
+//                }
+//            }
+//        }
+//    }
 }

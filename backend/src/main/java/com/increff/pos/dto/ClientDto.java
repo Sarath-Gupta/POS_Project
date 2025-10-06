@@ -4,7 +4,8 @@ import com.increff.pos.api.ClientApi;
 import com.increff.pos.commons.ApiException;
 import com.increff.pos.model.data.ClientData;
 import com.increff.pos.model.form.ClientForm;
-import com.increff.pos.pojo.Client;
+import com.increff.pos.entity.Client;
+import com.increff.pos.util.AbstractMapper;
 import com.increff.pos.util.ClientUtil;
 import com.increff.pos.util.NormalizeUtil;
 import com.increff.pos.util.ValidationUtil;
@@ -18,36 +19,45 @@ public class ClientDto {
 
     @Autowired
     ClientApi clientApi;
+    
+    @Autowired
+    AbstractMapper mapper;
 
     public ClientData add(ClientForm clientForm) throws ApiException {
+        //TODO: first do the validation and then normalize
         NormalizeUtil.normalize(clientForm);
         ValidationUtil.validate(clientForm);
-        Client clientPojo = ClientUtil.convert(clientForm);
+        Client clientPojo = mapper.convert(clientForm, Client.class);
         clientApi.add(clientPojo);
-        return ClientUtil.convert(clientPojo);
+        return mapper.convert(clientPojo, ClientData.class);
     }
+
+//    public List<ClientData> addFile(MultipartFile file) throws ApiException {
+//        List<ClientForm> listClient = ClientUtil.parse(file,Client.class);
+//    }
 
     public ClientData getById(Integer id) throws ApiException {
         Client clientPojo = clientApi.getById(id);
-        return ClientUtil.convert(clientPojo);
+        if(clientPojo == null) {
+            return null;
+        }
+        return mapper.convert(clientPojo, ClientData.class);
     }
 
     public List<ClientData> getAll() {
         List<Client> list = clientApi.getAll();
-        return ClientUtil.convert(list);
+        return mapper.convert(list, ClientData.class);
     }
 
     public ClientData update(Integer id, ClientForm clientForm) throws ApiException {
         NormalizeUtil.normalize(clientForm);
         ValidationUtil.validate(clientForm);
-        Client clientPojo = ClientUtil.convert(clientForm);
+        Client clientPojo = mapper.convert(clientForm, Client.class);
         Client updatedPojo = clientApi.update(id, clientPojo);
-        return ClientUtil.convert(updatedPojo);
+        return mapper.convert(updatedPojo, ClientData.class);
     }
 
-    public void delete(Integer id, ClientForm clientForm) throws ApiException {
-        NormalizeUtil.normalize(clientForm);
-        ValidationUtil.validate(clientForm);
+    public void delete(Integer id) throws ApiException {
         clientApi.delete(id);
     }
 

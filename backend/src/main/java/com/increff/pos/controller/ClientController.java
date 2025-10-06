@@ -6,6 +6,7 @@ import com.increff.pos.model.form.ClientForm;
 import com.increff.pos.model.data.ClientData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -20,6 +21,11 @@ public class ClientController {
     public ClientData addClient(@RequestBody ClientForm clientForm) throws ApiException {
         return clientDto.add(clientForm);
     }
+
+//    @RequestMapping(method = RequestMethod.POST)
+//    public List<ClientData> addFile(@RequestParam MultipartFile file) throws ApiException {
+//        return clientDto.addFile(file);
+//    }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public ClientData getClientById(@PathVariable(value = "id") Integer id) throws ApiException {
@@ -37,7 +43,7 @@ public class ClientController {
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    public void deleteClient(@PathVariable(value = "id") Integer id, @RequestBody ClientForm clientForm) throws ApiException {
-        clientDto.delete(id,clientForm);
+    public void deleteClient(@PathVariable(value = "id") Integer id) throws ApiException {
+        clientDto.delete(id);
     }
 }

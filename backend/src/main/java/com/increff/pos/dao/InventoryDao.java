@@ -1,6 +1,6 @@
 package com.increff.pos.dao;
 
-import com.increff.pos.pojo.Inventory;
+import com.increff.pos.entity.Inventory;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 

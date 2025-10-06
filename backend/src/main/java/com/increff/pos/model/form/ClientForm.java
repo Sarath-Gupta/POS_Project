@@ -12,5 +12,3 @@ public class ClientForm {
     @NotNull @Size(max = 255)
     private String clientName;
 }
-
-

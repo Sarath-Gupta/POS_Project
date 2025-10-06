@@ -1,10 +1,8 @@
 package com.increff.pos.api;
 
-import com.google.protobuf.Api;
 import com.increff.pos.dao.ClientDao;
-import com.increff.pos.pojo.Client;
+import com.increff.pos.entity.Client;
 import com.increff.pos.commons.ApiException;
-import com.increff.pos.util.ClientUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,17 +18,20 @@ public class ClientApi {
     @Transactional
     public void add(Client client) throws ApiException {
         Client existingClient = clientDao.findByName(client.getClientName());
-        ClientUtil.ifExists(existingClient);
+        AbstractApi.ifExists(existingClient);
         clientDao.add(client);
     }
 
-
-    public Client getById(Integer id) throws ApiException {
+    public Client getCheckById(Integer id) throws ApiException {
         Client clientPojo = clientDao.findById(id);
-        ClientUtil.ifNotExists(clientPojo);
+        AbstractApi.ifNotExists(clientPojo);
         return clientPojo;
     }
 
+    public Client getById(Integer id) {
+        Client client = clientDao.findById(id);
+        return client;
+    }
 
     public List<Client> getAll() {
         return clientDao.findAll();
@@ -50,9 +51,7 @@ public class ClientApi {
     @Transactional
     public void delete(Integer id) throws ApiException {
         Client deleteClient = clientDao.findById(id);
-        if(Objects.isNull(deleteClient)) {
-            throw new ApiException("Bro doesn't exist");
-        }
+        AbstractApi.ifNotExists(deleteClient);
         clientDao.delete(deleteClient);
     }
 

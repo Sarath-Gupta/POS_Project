@@ -2,13 +2,12 @@ package com.increff.pos.api;
 
 import com.increff.pos.commons.ApiException;
 import com.increff.pos.dao.OrdersDao;
-import com.increff.pos.pojo.Orders;
+import com.increff.pos.entity.Orders;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Objects;
 
 
 @Service
@@ -28,9 +27,7 @@ public class OrderApi {
 
     public Orders getById(Integer id) throws ApiException {
         Orders order = ordersDao.findById(id);
-        if(Objects.isNull(order)) {
-            throw new ApiException("Order ID doesn't exist");
-        }
+        AbstractApi.ifNotExists(order);
         return order;
     }
 }

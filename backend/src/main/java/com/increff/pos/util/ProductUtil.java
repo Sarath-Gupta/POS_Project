@@ -3,7 +3,7 @@ package com.increff.pos.util;
 import com.increff.pos.commons.ApiException;
 import com.increff.pos.model.data.ProductData;
 import com.increff.pos.model.form.ProductForm;
-import com.increff.pos.pojo.Product;
+import com.increff.pos.entity.Product;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -44,17 +44,5 @@ public class ProductUtil {
             dataList.add(productData);
         }
         return dataList;
-    }
-
-    public static void ifExists(Product product) throws ApiException {
-        if(!Objects.isNull(product)) {
-            throw new ApiException("Client already exists");
-        }
-    }
-
-    public static void ifNotExists(Product product) throws ApiException {
-        if(Objects.isNull(product)) {
-            throw new ApiException("Client doesn't exist");
-        }
     }
 }

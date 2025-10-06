@@ -3,7 +3,7 @@ package com.increff.pos.util;
 import com.increff.pos.commons.ApiException;
 import com.increff.pos.model.data.InventoryData;
 import com.increff.pos.model.form.InventoryForm;
-import com.increff.pos.pojo.Inventory;
+import com.increff.pos.entity.Inventory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,15 +38,4 @@ public class InventoryUtil {
         return dataList;
     }
 
-    public static void ifNotExists(Inventory inventory) throws ApiException {
-        if (Objects.isNull(inventory)) {
-            throw new ApiException("Inventory record doesn't exist.");
-        }
-    }
-
-    public static void ifExists(Inventory inventory) throws ApiException {
-        if (!Objects.isNull(inventory)) {
-            throw new ApiException("Inventory record already exists.");
-        }
-    }
 }

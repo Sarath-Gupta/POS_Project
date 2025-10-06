@@ -1,6 +1,6 @@
 package com.increff.pos.dao;
 
-import com.increff.pos.pojo.Client;
+import com.increff.pos.entity.Client;
 import org.springframework.stereotype.Repository;
 import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;

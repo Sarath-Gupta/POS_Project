@@ -5,9 +5,9 @@ import com.increff.pos.api.ProductFlow;
 import com.increff.pos.commons.ApiException;
 import com.increff.pos.model.data.ProductData;
 import com.increff.pos.model.form.ProductForm;
-import com.increff.pos.pojo.Product;
+import com.increff.pos.entity.Product;
+import com.increff.pos.util.AbstractMapper;
 import com.increff.pos.util.NormalizeUtil;
-import com.increff.pos.util.ProductUtil;
 import com.increff.pos.util.ValidationUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -23,29 +23,32 @@ public class ProductDto {
     @Autowired
     ProductFlow productFlow;
 
+    @Autowired
+    AbstractMapper mapper;
+
     public ProductData add(ProductForm productForm) throws ApiException {
         NormalizeUtil.normalize(productForm);
         ValidationUtil.validate(productForm);
-        Product pojo = ProductUtil.convert(productForm);
+        Product pojo = mapper.convert(productForm, Product.class);
         productFlow.add(pojo);
-        return ProductUtil.convert(pojo);
+        return mapper.convert(pojo, ProductData.class);
     }
 
     public ProductData findById(Integer id) throws ApiException {
         Product productPojo = productApi.findById(id);
-        return ProductUtil.convert(productPojo);
+        return mapper.convert(productPojo, ProductData.class);
     }
 
     public List<ProductData> getAll() {
         List<Product> productList = productApi.getAll();
-        return ProductUtil.convert(productList);
+        return mapper.convert(productList, ProductData.class);
     }
 
     public ProductData update(Integer id, ProductForm productForm) throws ApiException {
         NormalizeUtil.normalize(productForm);
         ValidationUtil.validate(productForm);
-        Product pojo = ProductUtil.convert(productForm);
+        Product pojo = mapper.convert(productForm, Product.class);
         productApi.update(id,pojo);
-        return ProductUtil.convert(pojo);
+        return mapper.convert(pojo, ProductData.class);
     }
 }

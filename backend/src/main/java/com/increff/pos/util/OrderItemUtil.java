@@ -2,7 +2,7 @@ package com.increff.pos.util;
 
 import com.increff.pos.model.data.OrderItemData;
 import com.increff.pos.model.form.OrderItemForm;
-import com.increff.pos.pojo.OrderItem;
+import com.increff.pos.entity.OrderItem;
 
 import java.util.ArrayList;
 import java.util.List;
