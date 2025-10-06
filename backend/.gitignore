@@ -4,6 +4,9 @@ target/
 !**/src/test/**/target/
 
 *.properties
+**/.idea/
+**/.DS_Store
+**/*.iml
 
 ### IntelliJ IDEA ###
 backend/.idea/modules.xml
