@@ -9,6 +9,7 @@ import javax.validation.constraints.Size;
 @Setter
 public class ClientForm {
 
-    @NotNull @Size(max = 255)
+    @NotNull(message = "Client Name cannot be empty")
+    @Size(max = 255, message = "Client Name is too long.")
     private String clientName;
 }

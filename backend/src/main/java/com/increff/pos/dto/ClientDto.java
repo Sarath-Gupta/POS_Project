@@ -1,12 +1,11 @@
 package com.increff.pos.dto;
 
-import com.increff.pos.api.ClientApi;
+import com.increff.pos.api.service.ClientApi;
 import com.increff.pos.commons.ApiException;
 import com.increff.pos.model.data.ClientData;
 import com.increff.pos.model.form.ClientForm;
 import com.increff.pos.entity.Client;
 import com.increff.pos.util.AbstractMapper;
-import com.increff.pos.util.ClientUtil;
 import com.increff.pos.util.NormalizeUtil;
 import com.increff.pos.util.ValidationUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,10 +22,13 @@ public class ClientDto {
     @Autowired
     AbstractMapper mapper;
 
+    @Autowired
+    private ValidationUtil validationUtil;
+
     public ClientData add(ClientForm clientForm) throws ApiException {
         //TODO: first do the validation and then normalize
         NormalizeUtil.normalize(clientForm);
-        ValidationUtil.validate(clientForm);
+        validationUtil.validate(clientForm);
         Client clientPojo = mapper.convert(clientForm, Client.class);
         clientApi.add(clientPojo);
         return mapper.convert(clientPojo, ClientData.class);
@@ -51,7 +53,7 @@ public class ClientDto {
 
     public ClientData update(Integer id, ClientForm clientForm) throws ApiException {
         NormalizeUtil.normalize(clientForm);
-        ValidationUtil.validate(clientForm);
+        validationUtil.validate(clientForm);
         Client clientPojo = mapper.convert(clientForm, Client.class);
         Client updatedPojo = clientApi.update(id, clientPojo);
         return mapper.convert(updatedPojo, ClientData.class);

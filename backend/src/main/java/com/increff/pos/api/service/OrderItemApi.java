@@ -1,4 +1,4 @@
-package com.increff.pos.api;
+package com.increff.pos.api.service;
 
 import com.increff.pos.commons.ApiException;
 import com.increff.pos.dao.OrderItemDao;

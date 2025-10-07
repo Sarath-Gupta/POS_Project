@@ -1,11 +1,10 @@
 package com.increff.pos.dto;
 
-import com.increff.pos.api.OrderApi;
+import com.increff.pos.api.service.OrderApi;
 import com.increff.pos.commons.ApiException;
 import com.increff.pos.model.data.OrderData;
 import com.increff.pos.entity.Orders;
 import com.increff.pos.util.AbstractMapper;
-import com.increff.pos.util.OrdersUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

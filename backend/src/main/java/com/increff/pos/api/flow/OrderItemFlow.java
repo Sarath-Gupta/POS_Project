@@ -1,5 +1,8 @@
-package com.increff.pos.api;
+package com.increff.pos.api.flow;
 
+import com.increff.pos.api.service.OrderApi;
+import com.increff.pos.api.service.OrderItemApi;
+import com.increff.pos.api.service.ProductApi;
 import com.increff.pos.commons.ApiException;
 import com.increff.pos.entity.OrderItem;
 import com.increff.pos.entity.Orders;

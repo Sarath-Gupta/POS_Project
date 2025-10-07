@@ -1,5 +1,9 @@
-package com.increff.pos.api;
+package com.increff.pos.api.flow;
 
+import com.increff.pos.api.service.AbstractApi;
+import com.increff.pos.api.service.ClientApi;
+import com.increff.pos.api.service.InventoryApi;
+import com.increff.pos.api.service.ProductApi;
 import com.increff.pos.commons.ApiException;
 import com.increff.pos.entity.Client;
 import com.increff.pos.entity.Inventory;

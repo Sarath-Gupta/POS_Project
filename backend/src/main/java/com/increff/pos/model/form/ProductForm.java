@@ -2,30 +2,31 @@ package com.increff.pos.model.form;
 
 import lombok.Getter;
 import lombok.Setter;
-
-import javax.validation.constraints.Max;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
+import org.hibernate.validator.constraints.URL;
+import javax.validation.constraints.*;
 
 @Getter
 @Setter
 public class ProductForm {
-    @NotNull
-    @Size(max = 255)
+
+    @NotBlank(message = "Barcode is empty")
+    @Size(max = 255, message = "Barcode is too long")
     private String barcode;
 
-    @NotNull
-    @Max(255)
-    private Integer clientId;
-
-    @NotNull
-    @Size(max = 255)
+    @NotBlank(message = "Product Name is empty")
+    @Size(max = 255, message = "Product Name is too long")
     private String name;
 
-    @NotNull
-    @Max(100000)
+    @NotNull(message = "Client ID is empty")
+    @Min(value = 1, message = "Client ID must be a positive number")
+    private Integer clientId;
+
+    @NotNull(message = "MRP is empty")
+    @Positive(message = "MRP must be a positive value")
     private Double mrp;
 
+    @NotBlank(message = "Image URL is empty")
+    @Size(max = 255, message = "Image URL is too long")
+    @URL(message = "Image URL is not valid")
     private String imgUrl;
 }

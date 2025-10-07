@@ -1,7 +1,7 @@
 package com.increff.pos.dto;
 
-import com.increff.pos.api.ProductApi;
-import com.increff.pos.api.ProductFlow;
+import com.increff.pos.api.service.ProductApi;
+import com.increff.pos.api.flow.ProductFlow;
 import com.increff.pos.commons.ApiException;
 import com.increff.pos.model.data.ProductData;
 import com.increff.pos.model.form.ProductForm;
@@ -26,9 +26,12 @@ public class ProductDto {
     @Autowired
     AbstractMapper mapper;
 
+    @Autowired
+    private ValidationUtil validationUtil;
+
     public ProductData add(ProductForm productForm) throws ApiException {
         NormalizeUtil.normalize(productForm);
-        ValidationUtil.validate(productForm);
+        validationUtil.validate(productForm);
         Product pojo = mapper.convert(productForm, Product.class);
         productFlow.add(pojo);
         return mapper.convert(pojo, ProductData.class);
@@ -46,7 +49,7 @@ public class ProductDto {
 
     public ProductData update(Integer id, ProductForm productForm) throws ApiException {
         NormalizeUtil.normalize(productForm);
-        ValidationUtil.validate(productForm);
+        validationUtil.validate(productForm);
         Product pojo = mapper.convert(productForm, Product.class);
         productApi.update(id,pojo);
         return mapper.convert(pojo, ProductData.class);

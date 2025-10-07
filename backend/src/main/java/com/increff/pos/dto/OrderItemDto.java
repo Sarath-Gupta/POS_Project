@@ -1,13 +1,12 @@
 package com.increff.pos.dto;
 
-import com.increff.pos.api.OrderItemApi;
-import com.increff.pos.api.OrderItemFlow;
+import com.increff.pos.api.service.OrderItemApi;
+import com.increff.pos.api.flow.OrderItemFlow;
 import com.increff.pos.commons.ApiException;
 import com.increff.pos.model.data.OrderItemData;
 import com.increff.pos.model.form.OrderItemForm;
 import com.increff.pos.entity.OrderItem;
 import com.increff.pos.util.AbstractMapper;
-import com.increff.pos.util.OrderItemUtil;
 import com.increff.pos.util.ValidationUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -25,8 +24,11 @@ public class OrderItemDto {
     @Autowired
     AbstractMapper mapper;
 
+    @Autowired
+    private ValidationUtil validationUtil;
+
     public List<OrderItemData> add(List<OrderItemForm> listForm) throws ApiException {
-        ValidationUtil.validate(listForm);
+        validationUtil.validate(listForm);
         List<OrderItem> listPojo = mapper.convert(listForm, OrderItem.class);
         orderItemFlow.add(listPojo);
         return mapper.convert(listPojo, OrderItemData.class);
@@ -43,7 +45,7 @@ public class OrderItemDto {
     }
 
     public OrderItemData update(Integer id, OrderItemForm orderItemForm) throws ApiException {
-        ValidationUtil.validate(orderItemForm);
+        validationUtil.validate(orderItemForm);
         OrderItem orderItem = mapper.convert(orderItemForm, OrderItem.class);
         OrderItem orderItemUpdated = orderItemApi.update(id, orderItem);
         return mapper.convert(orderItemUpdated, OrderItemData.class);
